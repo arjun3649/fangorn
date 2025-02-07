@@ -1,0 +1,60 @@
+<nav class="bg-white shadow-md">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+                <a href="/" class="text-xl font-bold text-gray-800 hover:text-gray-600">
+                    Fangorn
+                </a>
+                <button class="md:hidden ml-auto flex flex-col space-y-1 hamburger-menu">
+                    <span class="w-6 h-0.5 bg-gray-800"></span>
+                    <span class="w-6 h-0.5 bg-gray-800"></span>
+                    <span class="w-6 h-0.5 bg-gray-800"></span>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-4 items-center">
+                <a href="/" class="text-gray-700 hover:text-gray-900 transition duration-300">
+                    Home
+                </a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 transition duration-300">
+                    Products
+                </a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 transition duration-300">
+                    About
+                </a>
+                <% if authenticated? %>
+                <%= button_to "Sign Out", session_path, method: :delete  %>
+                <% else %>
+                <%= link_to "Sign In", new_session_path %>
+                <% end %>
+
+            </div>
+
+            <!-- Mobile menu (optional, you'd need JS to toggle) -->
+            <div class="md:hidden absolute top-full left-0 w-full bg-white shadow-md mobile-menu hidden">
+                <div class="flex flex-col space-y-2 p-4">
+                    <a href="/" :class="text-gray-700 hover:text-gray-900">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-gray-900">Products</a>
+                    <a href="#" class="text-gray-700 hover:text-gray-900">About</a>
+                    <% if authenticated? %>
+                    <%= button_to "Sign Out", session_path, method: :delete  %>
+                    <% else %>
+                    <%= link_to "Sign In", new_session_path %>
+                    <% end %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        hamburgerMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
+</script>

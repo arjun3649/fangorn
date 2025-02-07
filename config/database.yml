@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: arjunrakwal
+  password: arjunrakwal
+  host: 127.0.0.1
+
+development:
+  <<: *default
+  database: fangorn
+
+test:
+  <<: *default
+  database: fangorn_test
+
+production:
+  <<: *default
+  database: your_database_name_production
+  username: your_production_username
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: your_production_host
+

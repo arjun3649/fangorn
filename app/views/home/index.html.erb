@@ -1,0 +1,46 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md mx-auto">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-6">
+                <!-- Header Section -->
+                <h1 class="text-2xl font-bold text-red-600 mb-6">
+                    This is the index page
+                </h1>
+
+                <!-- Login Status Section -->
+                <div class="space-y-4">
+                    <!-- Session Status -->
+                    <div class="p-4 bg-gray-50 rounded-md">
+                        <% if authenticated? %>
+                        <p class="text-green-700 font-medium">
+                            <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                            Welcome back,<%= Current.user.email_address%>
+                        </p>
+                        <% else %>
+                        <p class="text-gray-600">
+                            <span class="inline-block w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+                            No one is logged in
+                        </p>
+                        <% end %>
+                    </div>
+
+                    <!-- Cookie Status -->
+                    <div class="p-4 bg-gray-50 rounded-md">
+
+                        <% if authenticated? %>
+                        <div class="flex flex-row space-x-3">
+                            <%= link_to "Add Product", "/products/new"%>
+                            <%= link_to "Show Products", "/products"%>
+                        </div>
+                        <% else %>
+                        <p class="text-gray-600">
+                            <span class="inline-block w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+                            Please log in to continue.
+                        </p>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
