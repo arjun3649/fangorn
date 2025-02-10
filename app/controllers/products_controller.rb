@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
+  before_action :set_product, only: [:edit, :update, :destroy] 
   def index
-  @products = Product.all
+    @products = Product.all
   end
 
   def new
@@ -8,17 +9,52 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product= Product.new(primary_category: params[:primary_category], price: params[:price], name: params[:name], description: params[:description])
+    @product = Product.new(product_params)  # Changed to use product_params
     if @product.save
-      flash.now[:alert]= "Product Added successful!"
-      redirect_to "/"
+      flash[:notice] = "Product Added successfully!"
+      redirect_to product_path
     else
-      flash.now[:alert] = @user.errors.full_messages.to_sentence
+      flash.now[:alert] = @product.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
     end
   rescue => e
-    Rails.logger.error("Signup error: #{e.message}")
-    flash.now[:alert] = "An error occurred during signup"
+    Rails.logger.error("Product creation error: #{e.message}")
+    flash.now[:alert] = "An error occurred while creating the product"
     render :new, status: :unprocessable_entity
+  end
+
+  def edit
+  end
+
+  def update
+    if @product.update(product_params)
+      flash[:notice] = "Product updated successfully"  # Changed from flash.now to flash
+      redirect_to products_path
+    else
+      flash.now[:alert] = @product.errors.full_messages.to_sentence
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @product.destroy
+    flash[:notice] = "Product was successfully deleted."
+    respond_to do |format|
+      format.html { redirect_to products_path, notice: "Product was successfully destroyed." }
+      format.turbo_stream
+    end
+  end
+
+  private
+
+  def set_product
+    @product = Product.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Product not found"
+    redirect_to products_path
+  end
+
+  def product_params
+    params.require(:product).permit(:primary_category, :price, :name, :description)
   end
 end
