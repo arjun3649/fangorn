@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_07_134354) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_13_210844) do
   create_schema "audit"
 
   # These are extensions that must be enabled in order to support this database
@@ -70,16 +70,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_07_134354) do
 
   create_table "products", force: :cascade do |t|
     t.string "primary_category"
-    t.string "slug"
     t.string "name"
     t.text "description"
-    t.string "variant_name"
-    t.text "variant_description"
-    t.text "variant_options"
-    t.decimal "price"
-    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "created_by"
+    t.datetime "deleted_at", precision: nil
   end
 
   create_table "properties", force: :cascade do |t|
@@ -109,5 +105,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_07_134354) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "variants", force: :cascade do |t|
+    t.bigint "products_id", null: false
+    t.string "slug", limit: 1024
+    t.string "name", limit: 1024
+    t.string "variation_criteria", limit: 1024
+    t.boolean "is_default"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "created_by"
+    t.datetime "deleted_at", precision: nil
+    t.index ["products_id"], name: "index_variants_on_products_id"
+  end
+
   add_foreign_key "sessions", "users"
+  add_foreign_key "variants", "products", column: "products_id"
 end

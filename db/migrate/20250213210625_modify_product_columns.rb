@@ -1,4 +1,4 @@
-class RemoveUnnecessaryColumnsFromProducts < ActiveRecord::Migration[8.0]
+class ModifyProductColumns < ActiveRecord::Migration[8.0]
   def up
     execute <<-SQL
       ALTER TABLE products

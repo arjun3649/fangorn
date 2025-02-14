@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  products: one
+  slug: MyString
+  name: MyString
+  variation_criteria: MyString
+  is_default: false
+
+two:
+  products: two
+  slug: MyString
+  name: MyString
+  variation_criteria: MyString
+  is_default: false

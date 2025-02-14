@@ -23,15 +23,14 @@
                         <%= product.name %>
                     </h2>
 
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-gray-900">
-                            Rs: <%= product.price %>
-                        </span>
-                    </div>
+
 
                     <div>
                         <p class="mt-2 text-sm text-gray-600 line-clamp-3">
                             <%= product.description %>
+                        </p>
+                        <p class="mt-2 text-sm text-gray-600 line-clamp-3">
+                            Createdby: <%= product.created_by %>
                         </p>
 
                         <%= button_to product_path(product),
@@ -50,6 +49,12 @@
                   class: "mt-2 inline-block text-blue-600 hover:text-blue-800",
                   data: { turbo_frame: dom_id(product) }
                 %>
+                    <%= link_to "Add Variant",
+                  
+                  class: "mt-2 inline-block text-blue-600 hover:text-blue-800",
+                  data: { turbo_frame: dom_id(product) }
+                %>
+
                 </div>
             </div>
             <% end %>
