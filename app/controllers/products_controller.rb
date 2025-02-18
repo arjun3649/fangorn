@@ -47,6 +47,12 @@ end
   end
   end
 
+
+    def show
+  @product = Product.includes(:variant).find(params[:id])
+    end
+
+
   private
 
   def set_product
