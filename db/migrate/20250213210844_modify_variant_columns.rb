@@ -10,7 +10,6 @@ class ModifyVariantColumns < ActiveRecord::Migration[8.0]
   def down
     execute <<-SQL
       ALTER TABLE variants
-      ALTER TABLE products
         DROP COLUMN IF EXISTS created_by,
         DROP COLUMN IF EXISTS deleted_at;
     SQL
