@@ -10,23 +10,21 @@ class ModifyProductColumns < ActiveRecord::Migration[8.0]
         DROP COLUMN IF EXISTS status;
 
       ALTER TABLE products
-        ADD COLUMN created_by uuid,
-        ADD COLUMN deleted_at timestamp;
+        ADD COLUMN IF NOT EXISTS deleted_at timestamp;
     SQL
   end
 
   def down
     execute <<-SQL
       ALTER TABLE products
-        ADD COLUMN slug varchar,
-        ADD COLUMN variant_name varchar,
-        ADD COLUMN variant_description text,
-        ADD COLUMN variant_options text,
-        ADD COLUMN price decimal,
-        ADD COLUMN status varchar;
+        ADD COLUMN IF NOT EXISTS slug varchar,
+        ADD COLUMN IF NOT EXISTS variant_name varchar,
+        ADD COLUMN IF NOT EXISTS variant_description text,
+        ADD COLUMN IF NOT EXISTS variant_options text,
+        ADD COLUMN IF NOT EXISTS price decimal,
+        ADD COLUMN IF NOT EXISTS "status" varchar;
 
       ALTER TABLE products
-        DROP COLUMN IF EXISTS created_by,
         DROP COLUMN IF EXISTS deleted_at;
     SQL
   end
