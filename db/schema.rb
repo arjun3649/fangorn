@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_14_201239) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_21_153025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_201239) do
     t.datetime "updated_at", null: false
     t.uuid "created_by"
     t.datetime "deleted_at", precision: nil
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "unit"
+    t.jsonb "more_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "product_id", null: false
+    t.index ["product_id"], name: "index_properties_on_product_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -54,6 +65,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_201239) do
     t.index ["product_id"], name: "index_variants_on_products_id"
   end
 
+  add_foreign_key "properties", "products"
   add_foreign_key "sessions", "users"
   add_foreign_key "variants", "products"
 end

@@ -1,0 +1,11 @@
+<ul class="mt-2">
+    <% @product.property.each do |property| %>
+    <li class="py-2 border-b flex justify-between">
+        <span>
+            <strong class="text-blue-600"><%= property.name %></strong>:
+            <%= property.description %> (<%= property.unit %>)
+        </span>
+        <%= link_to "Edit", edit_product_property_path(@product, property), class: "px-4 py-2 bg-blue-400 hover:bg-blue-600 text-white rounded-lg transition" %>
+    </li>
+    <% end %>
+</ul>

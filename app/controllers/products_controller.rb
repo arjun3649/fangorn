@@ -30,7 +30,7 @@ end
 
   def update
     if @product.update(product_params)
-      flash[:notice] = "Product updated successfully"  # Changed from flash.now to flash
+      flash[:notice] = "Product updated successfully"
       redirect_to products_path
     else
       flash.now[:alert] = @product.errors.full_messages.to_sentence
