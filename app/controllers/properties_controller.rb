@@ -1,20 +1,17 @@
 class PropertiesController < ApplicationController
   before_action :set_product
-  before_action :set_property, only: [ :edit, :update ]
+  before_action :set_property, only: [ :edit, :update, :search ]
 
   def index
   end
 
 
+# In your ProductsController
 def search
-  Rails.logger.info "Searching for: #{params[:query]}"
-   Rails.logger.info "Found #{@properties.size} properties"
-  @product = Product.find(params[:product_id])      
+  @product = Product.find(params[:id])  # Note: uses :id instead of :product_id since it's a member route
   @properties = @product.properties
-                  .where('name LIKE ?', "%#{params[:query]}%")
-                  .limit(10)  # Add limit for safety
-                  
-
+                .where( 'name LIKE ?' ,"%#{params[:query]}%")
+                .limit(10)
   render json: @properties.as_json(only: [:id, :name, :description, :unit])
 end
 
