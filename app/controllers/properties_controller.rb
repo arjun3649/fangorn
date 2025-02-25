@@ -5,6 +5,19 @@ class PropertiesController < ApplicationController
   def index
   end
 
+
+def search
+  Rails.logger.info "Searching for: #{params[:query]}"
+   Rails.logger.info "Found #{@properties.size} properties"
+  @product = Product.find(params[:product_id])      
+  @properties = @product.properties
+                  .where('name LIKE ?', "%#{params[:query]}%")
+                  .limit(10)  # Add limit for safety
+                  
+
+  render json: @properties.as_json(only: [:id, :name, :description, :unit])
+end
+
   def new
     @property = Property.new
   end
