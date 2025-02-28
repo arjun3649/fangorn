@@ -1,11 +1,23 @@
 <ul class="mt-2">
-    <% @product.property.each do |property| %>
-    <li class="py-2 border-b flex justify-between">
-        <span>
-            <strong class="text-blue-600"><%= property.name %></strong>:
-            <%= property.description %> (<%= property.unit %>)
-        </span>
-        <%= link_to "Edit", edit_product_property_path(@product, property), class: "px-4 py-2 bg-blue-400 hover:bg-blue-600 text-white rounded-lg transition" %>
+    <% @product.product_properties.includes(:property).each do |product_property| %>
+    <li class="py-3 border-b flex flex-col">
+        <div class="flex justify-between items-start mb-1">
+            <div>
+                <strong class="text-blue-600"><%= product_property.property.name %></strong>:
+                <span class="text-gray-600"><%= product_property.property.description %> (<%= product_property.property.unit %>)</span>
+            </div>
+            <%= link_to "Edit", edit_product_product_property_path(@product, product_property), 
+            class: "px-3 py-1 bg-blue-400 hover:bg-blue-600 text-white text-sm rounded-lg transition" %>
+        </div>
+        <div class="ml-4 mt-1 text-sm">
+            <span class="font-medium">Value:</span> <span class="text-gray-800"><%= product_property.value %></span>
+            <% if product_property.remarks.present? %>
+            <span class="ml-3 font-medium">Remarks:</span> <span class="text-gray-600"><%= product_property.remarks %></span>
+            <% end %>
+        </div>
     </li>
+    <% end %>
+    <% if @product.product_properties.empty? %>
+    <li class="py-3 text-gray-500 italic">No properties added yet</li>
     <% end %>
 </ul>

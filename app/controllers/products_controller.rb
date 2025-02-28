@@ -49,7 +49,7 @@ end
 
 
     def show
-  @product = Product.includes(:variant).find(params[:id])
+  @product = Product.includes(:variants).find(params[:id])
     end
 
 

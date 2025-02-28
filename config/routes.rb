@@ -5,13 +5,11 @@ Rails.application.routes.draw do
 
 
 resources :products do
-  resources :properties do
-    collection do
-      get :search
-    end
-  end
+  resources :product_properties
   resources :variants
 end
+
+resources :properties
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_21_153025) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_27_110852) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "product_properties", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "property_id", null: false
+    t.string "value"
+    t.string "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_properties_on_product_id"
+    t.index ["property_id"], name: "index_product_properties_on_property_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "primary_category", limit: 100, null: false
@@ -31,8 +42,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_153025) do
     t.jsonb "more_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "product_id", null: false
-    t.index ["product_id"], name: "index_properties_on_product_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -65,7 +74,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_153025) do
     t.index ["product_id"], name: "index_variants_on_products_id"
   end
 
-  add_foreign_key "properties", "products"
+  add_foreign_key "product_properties", "products"
+  add_foreign_key "product_properties", "properties"
   add_foreign_key "sessions", "users"
   add_foreign_key "variants", "products"
 end
